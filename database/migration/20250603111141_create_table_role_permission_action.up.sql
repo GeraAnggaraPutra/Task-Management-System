@@ -1,4 +1,4 @@
-CREATE TYPE IF NOT EXISTS "action" AS ENUM (
+CREATE TYPE "action" AS ENUM (
   'Read',
   'Create',
   'Update',

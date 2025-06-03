@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "roles" (
-  "guid" bigint UNIQUE PRIMARY KEY NOT NULL DEFAULT (gen_random_uuid()),
+  "guid" varchar UNIQUE PRIMARY KEY NOT NULL DEFAULT (gen_random_uuid()),
   "name" varchar UNIQUE NOT NULL,
   "description" varchar,
   "created_at" timestamp NOT NULL DEFAULT (now()),
