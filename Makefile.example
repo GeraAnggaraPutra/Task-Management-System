@@ -1,9 +1,7 @@
 # App Env
 GO_APP=go
-RUNNER_APP=nodemon
 MIGRATE_APP=migrate
 LINT_APP=golangci-lint
-RUNNER_SIG_EXT=go,tmpl,html
 
 SERVER_FILE=cmd/main.go
 BINARY_FILE=bin/main.sh
@@ -17,8 +15,6 @@ deps:
 	$(GO_APP) mod tidy
 run:
 	$(GO_APP) run $(SERVER_FILE)
-dev:
-	$(RUNNER_APP) --exec $(GO_APP) run $(SERVER_FILE) --signal SIGTERM -e $(RUNNER_SIG_EXT)
 build:
 	$(GO_APP) build -o $(BINARY_FILE) $(SERVER_FILE)
 

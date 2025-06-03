@@ -9,9 +9,9 @@ type Session struct {
 	GUID                  string       `json:"guid" gorm:"primaryKey"`
 	UserGUID              string       `json:"user_guid"`
 	AccessToken           string       `json:"access_token"`
-	AccessTokenExpiredAt  time.Time    `json:"access_token_expired_at"`
+	AccessTokenExpiresAt  time.Time    `json:"access_token_expires_at"`
 	RefreshToken          string       `json:"refresh_token"`
-	RefreshTokenExpiredAt time.Time    `json:"refresh_token_expired_at"`
+	RefreshTokenExpiresAt time.Time    `json:"refresh_token_expires_at"`
 	CreatedAt             time.Time    `json:"created_at"`
 	UpdatedAt             sql.NullTime `json:"updated_at"`
 }
