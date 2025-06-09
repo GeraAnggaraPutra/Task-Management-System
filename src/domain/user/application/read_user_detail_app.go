@@ -7,16 +7,16 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"task-management-system/src/constant"
-	"task-management-system/src/domain/auth/payload"
-	"task-management-system/src/domain/auth/service"
+	"task-management-system/src/domain/user/payload"
+	"task-management-system/src/domain/user/service"
 	"task-management-system/src/module"
 )
 
-func loginApp(svc *service.Service) gin.HandlerFunc {
+func readUserDetailApp(svc *service.Service) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var request payload.LoginRequest
-		if err := c.ShouldBind(&request); err != nil {
-			log.Printf("Error parsing request: %v", err)
+		var request payload.ReadUserDetailRequest
+		if err := c.ShouldBindUri(&request); err != nil {
+			log.Printf("Error parsing URI param: %v", err)
 			module.ResponseData(c, module.ResponsePayload{
 				Code:    http.StatusBadRequest,
 				Message: constant.ErrFailedParseRequest.Error(),
@@ -25,11 +25,12 @@ func loginApp(svc *service.Service) gin.HandlerFunc {
 			return
 		}
 
-		data, user, err := svc.LoginService(c.Request.Context(), request)
+		log.Printf("Request to read user detail: %v", request.GUID)
+		data, err := svc.ReadUserDetailService(c.Request.Context(), request)
 		if err != nil {
 			module.ResponseData(c, module.ResponsePayload{
 				Code:    http.StatusBadRequest,
-				Message: msgFailedLogin,
+				Message: msgFailedGetUserDetail,
 				Error:   &err,
 			})
 			return
@@ -37,8 +38,8 @@ func loginApp(svc *service.Service) gin.HandlerFunc {
 
 		module.ResponseData(c, module.ResponsePayload{
 			Code:    http.StatusOK,
-			Data:    payload.ToSessionResponse(data, user),
-			Message: msgSuccessLogin,
+			Data:    payload.ToUserResponse(data),
+			Message: msgSuccessGetUserDetail,
 		})
 	}
 }

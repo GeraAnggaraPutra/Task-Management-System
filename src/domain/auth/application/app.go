@@ -16,5 +16,5 @@ func AddRoutes(r *gin.Engine, m *module.Module) {
 
 	routes.POST("/login", loginApp(svc))
 	routes.POST("/refresh-token", refreshTokenApp(svc))
-	routes.POST("/logout", mdw.ValidateToken(), logoutApp(svc))
+	routes.POST("/logout", logoutApp(svc), mdw.ValidateToken())
 }

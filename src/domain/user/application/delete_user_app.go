@@ -7,16 +7,16 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"task-management-system/src/constant"
-	"task-management-system/src/domain/auth/payload"
-	"task-management-system/src/domain/auth/service"
+	"task-management-system/src/domain/user/payload"
+	"task-management-system/src/domain/user/service"
 	"task-management-system/src/module"
 )
 
-func refreshTokenApp(svc *service.Service) gin.HandlerFunc {
+func deleteUserApp(svc *service.Service) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var request payload.RefreshTokenRequest
-		if err := c.ShouldBind(&request); err != nil {
-			log.Printf("Error parsing request: %v", err)
+		var request payload.DeleteUserRequest
+		if err := c.ShouldBindUri(&request); err != nil {
+			log.Printf("Error parsing URI param: %v", err)
 			module.ResponseData(c, module.ResponsePayload{
 				Code:    http.StatusBadRequest,
 				Message: constant.ErrFailedParseRequest.Error(),
@@ -25,11 +25,11 @@ func refreshTokenApp(svc *service.Service) gin.HandlerFunc {
 			return
 		}
 
-		data, user, err := svc.RefreshTokenService(c.Request.Context(), request)
+		err := svc.DeleteUserService(c.Request.Context(), request)
 		if err != nil {
 			module.ResponseData(c, module.ResponsePayload{
-				Code:    http.StatusInternalServerError,
-				Message: msgFailedRefreshToken,
+				Code:    http.StatusBadRequest,
+				Message: msgFailedDeleteUser,
 				Error:   &err,
 			})
 			return
@@ -37,8 +37,8 @@ func refreshTokenApp(svc *service.Service) gin.HandlerFunc {
 
 		module.ResponseData(c, module.ResponsePayload{
 			Code:    http.StatusOK,
-			Data:    payload.ToSessionResponse(data, user),
-			Message: msgSuccessRefreshToken,
+			Data:    nil,
+			Message: msgSuccessDeleteUser,
 		})
 	}
 }

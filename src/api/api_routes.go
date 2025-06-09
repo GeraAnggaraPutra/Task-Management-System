@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	authDomain "task-management-system/src/domain/auth/application"
+	userDomain "task-management-system/src/domain/user/application"
 	"task-management-system/src/module"
 )
 
@@ -19,4 +20,5 @@ func routes(r *gin.Engine, m *module.Module) {
 
 	// domain routes
 	authDomain.AddRoutes(r, m)
+	userDomain.AddRoutes(r, m)
 }

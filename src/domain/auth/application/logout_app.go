@@ -1,7 +1,6 @@
 package application
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +19,6 @@ func logoutApp(svc *service.Service) gin.HandlerFunc {
 
 		err = svc.LogoutService(c.Request.Context(), ah.GetClaims())
 		if err != nil {
-			log.Printf("Error logout: %v", err)
 			module.ResponseData(c, module.ResponsePayload{
 				Code:    http.StatusBadRequest,
 				Message: msgFailedLogout,

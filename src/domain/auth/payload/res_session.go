@@ -10,6 +10,7 @@ type UserResponse struct {
 	GUID      string  `json:"guid"`
 	Username  string  `json:"username"`
 	Email     string  `json:"email"`
+	RoleGUID  string  `json:"role_guid"`
 	CreatedAt string  `json:"created_at"`
 	CreatedBy *string `json:"created_by"`
 	UpdatedAt *string `json:"updated_at"`
@@ -32,6 +33,7 @@ func ToSessionResponse(entity model.Session, user model.User) (response SessionR
 	response.User.GUID = user.GUID
 	response.User.Username = user.Username
 	response.User.Email = user.Email
+	response.User.RoleGUID = user.RoleGUID
 	response.User.CreatedAt = user.CreatedAt.Format(time.RFC3339)
 
 	if user.CreatedBy.Valid {

@@ -7,11 +7,11 @@ import (
 )
 
 type PaginationPayload struct {
-	Search      string `query:"search" json:"search"`
-	Sort        string `query:"sort" json:"sort"`
-	Direction   string `query:"direction" json:"direction"`
-	Page        int    `query:"page" json:"page"`
-	Limit       int    `query:"limit" json:"limit"`
+	Search      string `form:"search"`
+	Sort        string `form:"sort"`
+	Direction   string `form:"direction"`
+	Page        int    `form:"page"`
+	Limit       int    `form:"limit"`
 	SetSearch   bool
 	Offset      int
 	Order       string
